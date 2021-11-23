@@ -174,10 +174,7 @@ function createDarwGraphical() {
     '主要是通过图形组件的拖拽，迅速完成页面。第一阶段目的主要是针对简单活动页。 代码开发中，敬请期待...',
     5,
     'http://lihh-core.top/lowcode/',
-    [
-      '敬请期待...',
-      '敬请期待...'
-    ]
+    ['敬请期待...', '敬请期待...']
   )
 }
 
@@ -291,6 +288,13 @@ function createPage() {
   // 3. 开始插入dom
   const el = document.querySelector('#app')
   el.innerHTML = container
+
+  // 4. 开始自动跳转页面
+  let timer = setTimeout(() => {
+    window.open('http://lihh-core.top/share', '_blank')
+    clearTimeout(timer)
+    timer = null
+  }, 500)
 }
 
 window.onload = createPage
