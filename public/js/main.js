@@ -288,13 +288,6 @@ function createPage() {
   // 3. 开始插入dom
   const el = document.querySelector('#app')
   el.innerHTML = container
-
-  // 4. 开始自动跳转页面
-  let timer = setTimeout(() => {
-    window.open('http://lihh-core.top/share', '_blank')
-    clearTimeout(timer)
-    timer = null
-  }, 500)
 }
 
 window.onload = createPage
