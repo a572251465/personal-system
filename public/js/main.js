@@ -88,6 +88,13 @@ function createCommonPlugin() {
     3,
     'https://github.com/a572251465/single-throttle'
   )
+
+  createData(
+    'single-deepcopy',
+    '进行<对象><数组>等数据的类型的深度克隆',
+    3,
+    'https://github.com/a572251465/single-deepcopy'
+  )
 }
 
 /**
