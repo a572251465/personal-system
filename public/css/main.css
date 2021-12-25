@@ -1,11 +1,58 @@
-html, body {
+html,
+body,
+ul,
+li {
   padding: 0;
   margin: 0;
 }
 
 #app {
-  background-image: url("../images/bk_logo.gif");
+  background-image: url('../images/bk_logo.gif');
   background-size: 100% 100%;
+}
+
+.nav {
+  position: fixed;
+  top: 70px;
+  right: 10px;
+  font-size: 16px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+}
+
+.nav a {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.nav a:hover {
+  color: white;
+  text-decoration: none;
+}
+
+.nav > li {
+  width: 130px;
+  padding-left: 20px;
+  background: white;
+  box-sizing: content-box;
+  border-radius: 10px 0 0 10px;
+  height: 50px;
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.nav > li:hover {
+  background-image: linear-gradient(to right, #e66465, #8a2be2, #8b008b) !important;
+  color: white;
+}
+
+.active {
+  background-image: linear-gradient(to right, #e66465, #8a2be2, #8b008b) !important;
+  color: white;
 }
 
 .tip {
@@ -36,7 +83,7 @@ html, body {
   bottom: 0;
   right: 0;
   background: black;
-  opacity: .8;
+  opacity: 0.8;
   z-index: 100;
 }
 

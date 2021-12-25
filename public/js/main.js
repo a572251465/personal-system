@@ -27,7 +27,7 @@ async function generateVisitHandle() {
   const res = await fetch(url, {
     method: 'put',
     mode: 'cors',
-    body: new URLSearchParams([["type", "work-platform"]])
+    body: new URLSearchParams([['type', 'work-platform']])
   }).then((result) => {
     if (result.ok) return result.json()
   })
@@ -70,10 +70,13 @@ function createDomByData(data) {
  * @param {*} name
  */
 function createSplitLine(name) {
+  const [value, index] = name.split('&&')
   return `
     <div class = "flex">
       <span class = "line"></span>
-      <span class = "world">${name}</span>
+      <span class = "world">
+        <a name = '${'point' + index}'>${value}</a>
+      </span>
       <span class = "line"></span>
     </div>
   `
@@ -116,11 +119,29 @@ function createDetail({ name, desc, importance, details = [], gitHub }) {
 
 /**
  * @author lihh
+ * @description 导航点击事件
+ * @param {*} event 点击事件
+ */
+function navClickHandle(event) {
+  const lis = document.querySelectorAll('.nav li')
+  const { index } = event.target.dataset
+  lis.forEach((el, key) => {
+    if (key === +index) {
+      el.className = 'active'
+    } else {
+      el.className = ''
+    }
+  })
+}
+
+/**
+ * @author lihh
  * @description 进行数据请求
  */
 function requestFetch() {
   return new Promise((resolve) => {
     const url = 'http://121.196.212.200:3000/public/worksList'
+    // const url = 'http://localhost:3000/public/worksList'
 
     /**
      * @author lihh
@@ -134,7 +155,7 @@ function requestFetch() {
           arr = editData[type] || (editData[type] = [])
         arr.push(item)
       }
-      resolve(editData)
+      return editData
     }
 
     fetch(url, {
@@ -151,7 +172,14 @@ function requestFetch() {
           alert(res.msg)
           return
         }
-        dataFormat(res.data)
+        // 所有的数据
+        const allData = dataFormat(res.data)
+        // 筛选比较重要的数据
+        const importanceData = dataFormat(res.data.filter((item) => item.importance === 1))
+        resolve({
+          allData,
+          importanceData
+        })
       })
   })
 }
@@ -181,27 +209,38 @@ function showOrHideHandle(typeValue) {
  * @description 用来开始生成页面
  */
 async function createPage() {
+  // 开始事件监听
+  document.querySelector('.nav').addEventListener('click', navClickHandle)
+
   // 生成访问次数
   generateVisitHandle()
 
   showOrHideHandle('show')
   // 0. 进行数据请求
-  const res = await requestFetch()
+  const { allData, importanceData = {} } = await requestFetch()
 
   // 1. 开始注册插件
   dataSource.length = 0
-  dataSource.push('个人博客')
-  createDomByData(res['1'])
-  dataSource.push('个人组件库')
-  createDomByData(res['2'])
-  dataSource.push('图形拖拽low-code平台')
-  createDomByData(res['3'])
-  dataSource.push('脚手架')
-  createDomByData(res['4'])
-  dataSource.push('功能插件')
-  createDomByData(res['5'])
-  dataSource.push('学习记录/ demo')
-  createDomByData(res['6'])
+  dataSource.push('“群英荟萃”&&0')
+  if (Object.keys(importanceData).length > 0) {
+    for (const index in importanceData) {
+      if (importanceData.hasOwnProperty(index)) {
+        createDomByData(importanceData[index])
+      }
+    }
+  }
+  dataSource.push('个人博客&&1')
+  createDomByData(allData['1'])
+  dataSource.push('个人组件库&&2')
+  createDomByData(allData['2'])
+  dataSource.push('图形拖拽low-code平台&&3')
+  createDomByData(allData['3'])
+  dataSource.push('脚手架&&4')
+  createDomByData(allData['4'])
+  dataSource.push('功能插件&&5')
+  createDomByData(allData['5'])
+  dataSource.push('学习记录/ demo&&6')
+  createDomByData(allData['6'])
 
   // 2. 开始生成元素
   const container = `
