@@ -20,8 +20,8 @@ function createData(name, desc, importance, gitHub, details) {
  * @description 生成访问次数
  */
 async function generateVisitHandle() {
-  // const url = 'http://121.196.212.200:3000/public/visit'
-  const url = 'http://localhost:3000/public/visit'
+  const url = 'http://121.196.212.200:3000/public/visit'
+  // const url = 'http://localhost:3000/public/visit'
 
   // 更新访问次数
   const res = await fetch(url, {
