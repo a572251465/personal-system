@@ -17,6 +17,36 @@ function createData(name, desc, importance, gitHub, details) {
 
 /**
  * @author lihh
+ * @description 生成访问次数
+ */
+async function generateVisitHandle() {
+  // const url = 'http://121.196.212.200:3000/public/visit'
+  const url = 'http://localhost:3000/public/visit'
+
+  // 更新访问次数
+  const res = await fetch(url, {
+    method: 'put',
+    mode: 'cors',
+    body: new URLSearchParams([["type", "work-platform"]])
+  }).then((result) => {
+    if (result.ok) return result.json()
+  })
+  if (res.code !== '200') {
+    alert(res.msg)
+    return
+  }
+
+  const { Flip } = window.NumberFlip
+  new Flip({
+    node: document.querySelector('#personNum'),
+    from: 0,
+    to: res.data,
+    duration: 1
+  })
+}
+
+/**
+ * @author lihh
  * @description 根据数据生成虚拟dom
  * @param {*} data 传递的数据
  * 1 博客
@@ -28,7 +58,7 @@ function createData(name, desc, importance, gitHub, details) {
  */
 function createDomByData(data) {
   if (!Array.isArray(data)) return
-  data.forEach(({name, introduce, skipPath, details}) => {
+  data.forEach(({ name, introduce, skipPath, details }) => {
     details = Array.isArray(details) && details.length > 0 ? details : []
     createData(name, introduce, 5, skipPath, details)
   })
@@ -100,8 +130,8 @@ function requestFetch() {
       const editData = {}
       for (const item of data) {
         // 获取对应数据类型
-        const {type} = item,
-        arr = (editData[type] || (editData[type] = []))
+        const { type } = item,
+          arr = editData[type] || (editData[type] = [])
         arr.push(item)
       }
       resolve(editData)
@@ -110,17 +140,19 @@ function requestFetch() {
     fetch(url, {
       method: 'get',
       mode: 'cors'
-    }).then(res => {
-      if (res.ok) {
-        return res.json()
-      }
-    }).then(res => {
-      if (res.code != '200') {
-        alert(res.msg)
-        return
-      }
-      dataFormat(res.data)
     })
+      .then((res) => {
+        if (res.ok) {
+          return res.json()
+        }
+      })
+      .then((res) => {
+        if (res.code != '200') {
+          alert(res.msg)
+          return
+        }
+        dataFormat(res.data)
+      })
   })
 }
 
@@ -133,13 +165,13 @@ function showOrHideHandle(typeValue) {
   // 表示判断值
   const judgeValue = typeValue === 'hide' ? 'show' : 'hide'
   const els = document.querySelectorAll('.mask')
-  const classNames = Array.from(els).map(item => Array.from(item.classList))
+  const classNames = Array.from(els).map((item) => Array.from(item.classList))
 
   classNames.forEach((item, key) => {
     const localIndex = item.indexOf(judgeValue)
     if (localIndex !== -1) {
       item.splice(localIndex, 1, typeValue)
-      els[key].className = item.join(" ")
+      els[key].className = item.join(' ')
     }
   })
 }
@@ -149,7 +181,10 @@ function showOrHideHandle(typeValue) {
  * @description 用来开始生成页面
  */
 async function createPage() {
-  showOrHideHandle("show")
+  // 生成访问次数
+  generateVisitHandle()
+
+  showOrHideHandle('show')
   // 0. 进行数据请求
   const res = await requestFetch()
 
@@ -194,7 +229,7 @@ async function createPage() {
   let timer = setTimeout(() => {
     showOrHideHandle('hide')
     clearTimeout(timer)
-  }, 2000)
+  }, 1000)
 }
 
 window.onload = createPage

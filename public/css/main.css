@@ -8,6 +8,27 @@ html, body {
   background-size: 100% 100%;
 }
 
+.tip {
+  position: fixed;
+  top: 30px;
+  left: 0;
+  padding: 15px 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: black;
+  background: white;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 0px 20px 20px 0px;
+  box-shadow: 3px 3px 3px #ccc;
+}
+
+#personNum {
+  color: red;
+  font-size: 35px;
+}
+
 #loading {
   position: fixed;
   top: 0;
