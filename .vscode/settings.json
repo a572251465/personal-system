@@ -1,0 +1,16 @@
+{
+  "editor.fontWeight": "bold",
+  "editor.letterSpacing": 2,
+  "editor.lineHeight": 1.7,
+  "editor.fontSize": 12,
+  "editor.fontFamily": "微软雅黑, 'Courier New', monospace",
+  "editor.tabSize": 2,
+  "prettier.printWidth": 120,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "none",
+  "prettier.jsxBracketSameLine": true,
+  "terminal.integrated.fontSize": 14,
+  "editor.cursorWidth": 5,
+  "terminal.integrated.fontFamily": "Consolas, 'Courier New', monospace"
+}

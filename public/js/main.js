@@ -20,7 +20,7 @@ function createData(name, desc, importance, gitHub, details) {
  * @description 生成访问次数
  */
 async function generateVisitHandle() {
-  const url = 'http://121.196.212.200:3000/public/visit'
+  const url = 'http://121.196.212.200:9999/public/visit'
   // const url = 'http://localhost:3000/public/visit'
 
   // 更新访问次数
@@ -32,7 +32,7 @@ async function generateVisitHandle() {
     if (result.ok) return result.json()
   })
   if (res.code !== '200') {
-    alert(res.msg)
+    new Error(res.msg)
     return
   }
 
@@ -140,7 +140,7 @@ function navClickHandle(event) {
  */
 function requestFetch() {
   return new Promise((resolve) => {
-    const url = 'http://121.196.212.200:3000/public/worksList'
+    const url = 'http://121.196.212.200:9999/public/worksList'
     // const url = 'http://localhost:3000/public/worksList'
 
     /**
@@ -233,6 +233,8 @@ async function createPage() {
   createDomByData(allData['1'])
   dataSource.push('个人组件库&&2')
   createDomByData(allData['2'])
+  dataSource.push('TODO在线平台&&7')
+  createDomByData(allData['7'])
   dataSource.push('图形拖拽low-code平台&&3')
   createDomByData(allData['3'])
   dataSource.push('脚手架&&4')
